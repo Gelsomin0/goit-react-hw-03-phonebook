@@ -1,5 +1,6 @@
 import { Component } from "react";
-import { nanoid } from 'nanoid'
+import PropTypes from 'prop-types';
+import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
 
 export class ContactForm extends Component {
@@ -32,7 +33,7 @@ export class ContactForm extends Component {
     render() {
         return (
             <form onSubmit={this.addContact} className={css.form_container}>
-                <label>
+                <label className={css.label_section}>
                     <p>Name:</p>
                     <input
                         type="text"
@@ -44,7 +45,7 @@ export class ContactForm extends Component {
                         value={this.state.name}
                     />
                 </label>
-                <label>
+                <label className={css.label_section}>
                     <p>Phone number:</p>
                     <input
                         type="tel"
@@ -60,4 +61,15 @@ export class ContactForm extends Component {
             </form>
         );
     }
+}
+
+ContactForm.propTypes = {
+    contacts: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+            number: PropTypes.string.isRequired,
+        })
+    ).isRequired,
+    getContact: PropTypes.func.isRequired,
 }

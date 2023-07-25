@@ -17,9 +17,12 @@ export class App extends Component {
   getContact = (newContact) => {
     let isExist = true;
 
-    this.state.contacts.map(({ name }) => {
-      if (newContact.name === name) isExist = false;
-    })
+    this.state.contacts.map((contact) => {
+      if (newContact.name === contact.name) {
+        return isExist = false;
+      }
+      return contact;
+    });
 
     if (isExist) {
       this.setState((prevState) => {
@@ -39,9 +42,19 @@ export class App extends Component {
     }))
   }
 
-  // componentDidUpdate(__, prevState) {
-  //   console.log(this.state.contacts);
-  // }
+  componentDidMount() {
+    if (localStorage.getItem('phonebook')) {
+      this.setState(({
+        contacts: JSON.parse(localStorage.getItem('phonebook'))
+      }))
+    } else {
+      localStorage.setItem('phonebook', JSON.stringify(this.state.contacts));
+    }
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('phonebook', JSON.stringify(this.state.contacts));
+  }
 
   render() {
     return (
